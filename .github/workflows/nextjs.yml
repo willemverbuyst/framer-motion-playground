@@ -49,12 +49,12 @@ jobs:
             exit 1
           fi
       - name: Read .nvmrc
-        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        run: echo "nvmrc=$(cat .nvmrc)" >> $GITHUB_OUTPUT
         id: nvm
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: "${{ steps.nvm.outputs.nvmrc }}"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
