@@ -20,6 +20,7 @@ jobs:
             npm run format:check
           else
             yarn format:check
+          fi
         working-directory: .
       - name: Lint
         run: npm run lint
