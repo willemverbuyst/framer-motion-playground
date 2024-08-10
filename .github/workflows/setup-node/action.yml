@@ -6,13 +6,18 @@ permissions:
   contents: read
   id-token: write
 
+outputs:
+  manager:
+    description: "Package manager"
+    value: ${{ steps.detect-package-manager.manager }}
+
 runs:
   using: "composite"
   steps:
     - name: Detect package manager
       id: detect-package-manager
       env:
-        MANAGER: ${{steps.detect-package-manager.manager}}
+        MANAGER: ${{ steps.detect-package-manager.manager }}
       run: |
         if [ -f "${{ github.workspace }}/yarn.lock" ]; then
           echo "manager=yarn" >> $GITHUB_OUTPUT

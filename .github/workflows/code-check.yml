@@ -16,7 +16,7 @@ jobs:
         id: setup-node
       - name: Format
         run: |
-          if [[ "${{ steps.detect-package-manager.outputs.manager }}" == "nvm"]]; then
+          if [[ "${{ steps.setup-node.outputs.manager }}" == "nvm"]]; then
             npm run format:check
           else
             yarn format:check
