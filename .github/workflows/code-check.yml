@@ -13,8 +13,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
         uses: ./.github/workflows/setup-node
+        id: setup-node
       - name: Format
-        run: npm run format:check
+        run: |
+          if [[ "${{ steps.setup-node.outputs.MANAGER }}" == "nvm"]]; then
+            npm run format:check
+          else
+            yarn format:check
         working-directory: .
       - name: Lint
         run: npm run lint

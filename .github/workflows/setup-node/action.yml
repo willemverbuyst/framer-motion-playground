@@ -11,6 +11,8 @@ runs:
   steps:
     - name: Detect package manager
       id: detect-package-manager
+      env:
+        MANAGER: ${{steps.detect-package-manager.manager}}
       run: |
         if [ -f "${{ github.workspace }}/yarn.lock" ]; then
           echo "manager=yarn" >> $GITHUB_OUTPUT
