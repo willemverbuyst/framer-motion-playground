@@ -2,7 +2,9 @@ name: code-check
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
+      - development
   workflow_dispatch:
 
 jobs:
@@ -15,13 +17,8 @@ jobs:
         uses: ./.github/workflows/setup-node
         id: setup-node
       - name: Format
-        run: |
-          if [ "${{ steps.setup-node.outputs.manager }}" == "npm"]; then
-            npm run format:check
-          else
-            yarn format:check
-          fi
+        run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} format:check
         working-directory: .
       - name: Lint
-        run: npm run lint
+        run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} lint
         working-directory: .
