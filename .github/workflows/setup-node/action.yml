@@ -10,6 +10,9 @@ outputs:
   manager:
     description: "Package manager"
     value: ${{ steps.detect-package-manager.outputs.manager }}
+  runner:
+    description: "Package manager runner"
+    value: ${{ steps.detect-package-manager.outputs.runner }}
   run:
     description: "Package manager run"
     value: ${{ steps.detect-package-manager.outputs.run }}
