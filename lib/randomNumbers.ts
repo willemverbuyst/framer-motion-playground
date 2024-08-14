@@ -5,7 +5,9 @@ export function generateRandomNumbers(
   upper: number,
   numberOfRandomNumbers: number,
 ) {
-  return _.chain(_.range(numberOfRandomNumbers))
+  const arr = _.range(numberOfRandomNumbers);
+
+  return _(arr)
     .map(() => _.random(lower, upper))
     .sortBy()
     .map((n) => _.padStart(_.toString(n), 6, "0"))
