@@ -8,4 +8,4 @@
 
 ## What is this?
 
-A simple Nextjs app to try out some Github Actions.
+A simple Next.js app to try out some GitHub Actions.
