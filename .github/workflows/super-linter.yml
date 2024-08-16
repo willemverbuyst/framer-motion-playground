@@ -1,8 +1,6 @@
 name: Super Linter
 
-on: # yamllint disable-line rule:truthy
-  push: null
-  pull_request: null
+on: [pull_request]
 
 permissions: {}
 
@@ -19,6 +17,7 @@ jobs:
 
     steps:
       - name: Checkout code
+        if: github.actor != 'dependabot[bot]'
         uses: actions/checkout@v4
         with:
           # super-linter needs the full git history to get the
