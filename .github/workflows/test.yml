@@ -1,0 +1,17 @@
+name: Test
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
+        uses: ./.github/workflows/setup-node
+        id: setup-node
+      - name: Test
+        run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} test

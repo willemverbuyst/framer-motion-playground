@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/framer-motion-playground",
   output: "export", // <=== enables static exports
   reactStrictMode: true,
 };
