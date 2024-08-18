@@ -21,13 +21,16 @@ export default function Home() {
       </section>
       <section className="flex">
         {result ? (
-          result.map((ns, i) => (
-            <ul key={i} className="flex flex-col px-10">
-              {ns.map((n, ii) => (
-                <li key={ii} className="flex items-center">
-                  {n.split("").map((l, iii) => (
-                    <span key={iii} className="p-1 w-[2rem] text-center">
-                      {l}
+          result.map((innerList) => (
+            <ul key={innerList.join("-")} className="flex flex-col px-10">
+              {innerList.map((numberInList) => (
+                <li key={numberInList} className="flex items-center">
+                  {numberInList.split("").map((letter) => (
+                    <span
+                      key={`${numberInList}-${letter}`}
+                      className="p-1 w-[2rem] text-center"
+                    >
+                      {letter}
                     </span>
                   ))}
                 </li>
