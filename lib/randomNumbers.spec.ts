@@ -26,11 +26,11 @@ describe("generateRandomNumbers", () => {
     // Flatten the result and check that each number is within range
     const flattenedResult = _.flatten(result);
 
-    flattenedResult.forEach((number) => {
-      const numericValue = parseInt(number, 10);
+    for (const number of flattenedResult) {
+      const numericValue = Number.parseInt(number, 10);
       expect(numericValue).toBeGreaterThanOrEqual(lower);
       expect(numericValue).toBeLessThanOrEqual(upper);
-    });
+    }
   });
 
   test("should return numbers as strings padded with zeros to a length of 6", () => {
@@ -42,10 +42,10 @@ describe("generateRandomNumbers", () => {
 
     const flattenedResult = _.flatten(result);
 
-    flattenedResult.forEach((number) => {
+    for (const number of flattenedResult) {
       expect(number).toHaveLength(6);
       expect(number).toMatch(/^\d{6}$/); // Should be 6 digits long
-    });
+    }
   });
 
   test("should return sorted numbers", () => {
