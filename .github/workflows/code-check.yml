@@ -14,7 +14,7 @@ jobs:
         uses: ./.github/workflows/setup-node
         id: setup-node
       - name: Format
-        run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} format:check
+        run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} format
         working-directory: .
       - name: Lint
         run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} lint
