@@ -5,7 +5,7 @@ import { generateRandomNumbers } from "@/lib/randomNumbers";
 import React from "react";
 
 export default function Home() {
-	const [result, setResult] = React.useState<Array<Array<string>> | null>(null);
+	const [result, setResult] = React.useState<string[][] | null>(null);
 
 	return (
 		<main className="flex min-h-screen flex-col items-center p-24">

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import type React from "react";
 import "./globals.css";
 
 const poppins = Poppins({
