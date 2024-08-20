@@ -1,5 +1,16 @@
 {
-  "files": {
-    "ignore": [".next/*", "node_modules"]
-  }
+	"files": {
+		"ignore": [".next/*", "node_modules"]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"all": true,
+			"style": {
+				"noDefaultExport": {
+					"level": "off"
+				}
+			}
+		}
+	}
 }
