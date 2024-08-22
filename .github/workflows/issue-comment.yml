@@ -4,6 +4,8 @@ on:
   issues:
     types: [opened]
 
+permissions: write-all
+
 jobs:
   comment-with-api:
     runs-on: ubuntu-latest
@@ -15,7 +17,7 @@ jobs:
           gh api -X POST \
             https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
             -f body='
-            Comment but from the API call not action
+            Comment but from the API call :sparkles:
             '
             
     env:
