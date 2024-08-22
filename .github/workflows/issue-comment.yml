@@ -5,10 +5,22 @@ on:
     types: [opened]
 
 jobs:
-  comment-with-action:
+  comment-with-api:
     runs-on: ubuntu-latest
     steps: 
-    - name: "dump gh context"
-      run: echo '${{ toJSON(github.event) }} | jq
-      shell: bash
+    - name: Create comment with api
+      run: |
+        gh api -X POST \
+          http://api.github.com/repo/${REPOSITORY_OWNER}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
+        -f body='
+        Comment from the action
+        '
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPOSITORY_OWNER: ${{ github.repository_owner }}
+      RPOSITORY: ${{ github.events.repository.name }}
+      ISSUE_NUMBER: ${{ github.events.issue.number }}
       
+      
+
+
