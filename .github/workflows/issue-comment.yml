@@ -17,9 +17,9 @@ jobs:
             '
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      REPOSITORY_OWNER: ${{ github.repository_owner }}
-      RPOSITORY: ${{ github.events.repository.name }}
-      ISSUE_NUMBER: ${{ github.events.issue.number }}
+      REPOSITORY_OWNER: ${{ github.event.repository.owner.login }}
+      RPOSITORY: ${{ github.event.repository.name }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
       
       
 
