@@ -11,7 +11,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
-        uses: ./.github/workflows/setup-node
+        uses: ./.github/actions/set-up-node
         id: setup-node
       - name: Test
         run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} test
