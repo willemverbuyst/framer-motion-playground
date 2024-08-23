@@ -17,7 +17,7 @@ jobs:
           gh api -X POST \
             https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
             -f body='
-            Thanks ${ISSUE_AUTHOR} for creating this issue :sparkles:
+            Thanks ${{ github.event.issue.user.login }} for creating this issue :sparkles:
             We will look into it :detective:
             '
             
@@ -26,7 +26,6 @@ jobs:
       REPOSITORY_OWNER: ${{ github.event.repository.owner.login }}
       REPOSITORY: ${{ github.event.repository.name }}
       ISSUE_NUMBER: ${{ github.event.issue.number }}
-      ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
       
       
 
