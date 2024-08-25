@@ -1,21 +1,47 @@
-name: Format and lint code
+name: Check Code
 
 on:
-  pull_request:
   workflow_dispatch:
+  pull_request:
+  push:
+
+defaults:
+  run:
+    working-directory: .
 
 jobs:
-  format-and-lint:
+  check-code:
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
         uses: ./.github/workflows/set-up-node
         id: setup-node
+
       - name: Format
         run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} format
-        working-directory: .
+
       - name: Lint
         run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} lint
-        working-directory: .
+
+      - name: Type check
+        run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} type-check
+
+  build:
+    needs: check-code
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
+        uses: ./.github/workflows/set-up-node
+        id: setup-node
+
+      - name: Format
+        run: ${{ steps.setup-node.outputs.manager }} ${{steps.setup-node.outputs.run}} build
+
