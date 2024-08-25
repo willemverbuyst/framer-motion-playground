@@ -1,10 +1,7 @@
 # Random Numbers
 
-<!-- markdownlint-disable line-length-->
+[![Check Code](https://github.com/willemverbuyst/random-numbers/actions/workflows/code-check.yml/badge.svg)](https://github.com/willemverbuyst/random-numbers/actions/workflows/code-check.yml) [![Test](https://github.com/willemverbuyst/random-numbers/actions/workflows/code-test.yml/badge.svg)](https://github.com/willemverbuyst/random-numbers/actions/workflows/code-test.yml) [![Lint GitHub Actions workflows](https://github.com/willemverbuyst/random-numbers/actions/workflows/gh-actions-lint.yml/badge.svg)](https://github.com/willemverbuyst/random-numbers/actions/workflows/gh-actions-lint.yml) [![Deploy Next.js site to Pages](https://github.com/willemverbuyst/random-numbers/actions/workflows/deploy-nextjs.yml/badge.svg?branch=main)](https://github.com/willemverbuyst/random-numbers/actions/workflows/deploy-nextjs.yml)
 
-[![Format and lint code](https://github.com/willemverbuyst/random-numbers/actions/workflows/code-check.yml/badge.svg)](https://github.com/willemverbuyst/random-numbers/actions/workflows/code-check.yml) [![Deploy Next.js site to Pages](https://github.com/willemverbuyst/random-numbers/actions/workflows/nextjs.yml/badge.svg?branch=main)](https://github.com/willemverbuyst/random-numbers/actions/workflows/nextjs.yml) [![Test](https://github.com/willemverbuyst/random-numbers/actions/workflows/test.yml/badge.svg)](https://github.com/willemverbuyst/random-numbers/actions/workflows/test.yml)
-
-<!-- markdownlint-enable line-length -->
 
 ## What is this?
 
