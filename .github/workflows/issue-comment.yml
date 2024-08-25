@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Log issue url
-        run: echo https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY}/issues/${ISSUE_NUMBER}
+        run: echo "https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY}/issues/${ISSUE_NUMBER}"
       - name: Create comment with API
         run: |
           gh api -X POST \
-            https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY}/issues/${ISSUE_NUMBER}/comments \
+            https://api.github.com/repos/"${REPOSITORY_OWNER}"/"${REPOSITORY}"/issues/"${ISSUE_NUMBER}"/comments \
             -f body='
             Thanks ${{ github.event.issue.user.login }} for creating this issue :sparkles:
             We will look into it :detective:
