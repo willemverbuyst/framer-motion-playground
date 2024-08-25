@@ -9,7 +9,8 @@ export default function Home() {
 			</h1>
 			<section className="py-24">
 				<Button asChild={true}>
-					<Link href="/random-numbers">Enter</Link></Button>
+					<Link href="/random-numbers">Enter</Link>
+				</Button>
 			</section>
 		</main>
 	);
