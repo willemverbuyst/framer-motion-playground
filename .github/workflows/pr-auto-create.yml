@@ -17,8 +17,8 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v6
         with:
-          destination_branch: development
-          pr_title: "feat: PLACEHOLDER TITLE"
-          pr_template: ".github/PULL_REQUEST_TEMPLATE.md"
+          base: development
+          title: "feat: PLACEHOLDER TITLE"
+          body-path: ".github/PULL_REQUEST_TEMPLATE.md"
           # pr_reviewer: "johndoe"
-          pr_draft: true
+          draft: true
