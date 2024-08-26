@@ -8,6 +8,7 @@ on:
 
 jobs:
   create_pr_repo_sync:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
 
