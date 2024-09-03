@@ -8,6 +8,7 @@
 		"start": "next start",
 		"lint": "biome lint .",
 		"format": "biome format .",
+		"format:write": "biome format --write .",
 		"test": "vitest",
 		"prepare": "husky install",
 		"type-check": "tsc --noEmit",

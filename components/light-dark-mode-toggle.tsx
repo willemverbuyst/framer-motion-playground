@@ -3,10 +3,10 @@
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useState } from "react";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
 } from "./ui/tooltip";
 
 export default function LightDarkModeToggle() {
