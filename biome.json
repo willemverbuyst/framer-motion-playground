@@ -1,6 +1,6 @@
 {
 	"files": {
-		"ignore": [".next/*", "node_modules"]
+		"ignore": [".next/*", "node_modules", "out/"]
 	},
 	"linter": {
 		"enabled": true,
