@@ -1,3 +1,4 @@
+import SiteHeader from "@/components/site-header";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
@@ -21,7 +22,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={cn(poppins.className, "dark")}>{children}</body>
+			<body className={cn(poppins.className, "light")}>
+				<div className="flex min-h-screen flex-col items-center">
+					<SiteHeader />
+					{children}
+				</div>
+			</body>
 		</html>
 	);
 }
