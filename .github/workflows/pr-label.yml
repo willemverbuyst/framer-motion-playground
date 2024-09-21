@@ -56,7 +56,13 @@ jobs:
             pull_number: prNumber,
           });
 
-          const updatedBody = pr.body.replace('- [ ] Added label', '- [x] Added label');
+          const labels = context.payload.pull_request.labels.map(label => label.name);
+          const hasRequiredLabel = labels.some(label => /^(process.env.REQUIRED_LABELS)$/.test(label));
+
+          // Update the PR body based on whether required labels are present
+          const updatedBody = hasRequiredLabel
+            ? pr.body.replace('- [ ] Added label', '- [x] Added label')
+            : pr.body.replace('- [x] Added label', '- [ ] Added label');
 
           // Update the PR description
           await github.rest.pulls.update({
