@@ -1,4 +1,4 @@
-name: Check PR Label
+name: Check PR Label and Update PR Description
 
 on:
   pull_request:
@@ -25,7 +25,7 @@ jobs:
         # Get the list of labels
         labels=$(jq -r '.pull_request.labels[].name' "$GITHUB_EVENT_PATH")
 
-        # Check if any of the labels are bug, enhancement, or refactor
+        # Check if any of the labels match the required ones
         if echo "$labels" | grep -Eq "($REQUIRED_LABELS)"; then
           echo "PR has one of the required labels."
           echo "label_valid=true" >> "$GITHUB_OUTPUT"
@@ -39,3 +39,27 @@ jobs:
       run: |
         echo "This PR is missing one of the required labels: bug, enhancement, or refactor."
         exit 1
+
+    - name: Get PR description
+      id: get_pr_description
+      uses: octokit/request-action@v3
+      with:
+        route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
+        mediaType: |
+          format=json
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update PR description to check "Added label" box
+      if: steps.check_label.outputs.label_valid == 'true'
+      run: |
+        # Get the current PR body and check the "Added label" checkbox
+        pr_body=$(echo "${{ steps.get_pr_description.outputs.data }}" | jq -r '.body')
+        updated_body=$(echo "$pr_body" | sed 's/- \[ \] Added label/- \[x\] Added label/g')
+
+        # Make a PATCH request to update the PR description
+        curl -X PATCH \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} \
+          -d "{\"body\": \"$updated_body\"}"
