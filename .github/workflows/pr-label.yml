@@ -40,26 +40,28 @@ jobs:
         echo "This PR is missing one of the required labels: bug, enhancement, or refactor."
         exit 1
 
-    - name: Get PR description
-      id: get_pr_description
-      uses: octokit/request-action@v3
-      with:
-        route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
-        mediaType: |
-          format=json
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Update PR description to check "Added label" box
       if: steps.check_label.outputs.label_valid == 'true'
-      run: |
-        # Get the current PR body and check the "Added label" checkbox
-        pr_body=$(echo "${{ steps.get_pr_description.outputs.data }}" | jq -r '.body')
-        updated_body=$(echo "$pr_body" | sed 's/- \[ \] Added label/- \[x\] Added label/g')
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const prNumber = context.payload.pull_request.number;
+          const owner = context.payload.repository.owner.login;
+          const repo = context.payload.repository.name;
+            
+          // Get the current PR body
+          const { data: pr } = await github.pulls.get({
+            owner,
+            repo,
+            pull_number: prNumber,
+          });
 
-        # Make a PATCH request to update the PR description
-        curl -X PATCH \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} \
-          -d "{\"body\": \"$updated_body\"}"
+          const updatedBody = pr.body.replace('- [ ] Added label', '- [x] Added label');
+
+          // Update the PR description
+          await github.pulls.update({
+            owner,
+            repo,
+            pull_number: prNumber,
+            body: updatedBody,
+          });
