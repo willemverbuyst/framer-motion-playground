@@ -55,10 +55,8 @@ jobs:
 
           const labelValid = ${{ steps.check_label.outputs.label_valid }};
 
-          console.log(labelValid)
-
           // Update the PR body based on whether required labels are present
-          const updatedBody = labelValid === 'true'
+          const updatedBody = labelValid
             ? pr.body.replace('- [ ] Added label', '- [x] Added label')
             : pr.body.replace('- [x] Added label', '- [ ] Added label');
 
