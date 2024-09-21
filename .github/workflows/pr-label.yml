@@ -33,18 +33,14 @@ jobs:
         if echo "$labels" | grep -Eq "($REQUIRED_LABELS)"; then
           echo "PR has one of the required labels."
           echo "label_valid=true" >> "$GITHUB_OUTPUT"
+          echo "This PR has one of the required labels: bug, enhancement, or refactor."
         else
           echo "PR is missing the required labels."
           echo "label_valid=false" >> "$GITHUB_OUTPUT"
-        fi
-
-    - name: Fail if PR does not have the required labels
-      if: steps.check_label.outputs.label_valid == 'false'
-      run: |
-        echo "This PR is missing one of the required labels: bug, enhancement, or refactor."
+          echo "This PR is missing one of the required labels: bug, enhancement, or refactor."
+        fi        
 
     - name: Update PR description to check "Added label" box
-      if: steps.check_label.outputs.label_valid == 'true'
       uses: actions/github-script@v7
       with:
         script: |
