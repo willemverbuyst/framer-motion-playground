@@ -13,10 +13,10 @@ jobs:
       run: |
         if [[ "$(jq '.pull_request.labels | length' "$GITHUB_EVENT_PATH")" == "0" ]]; then
           echo "PR is missing a label."
-          echo "{label_missing}={true}" >> $GITHUB_OUTPUT
+          echo "label_missing=true" >> $GITHUB_OUTPUT
         else
           echo "PR has labels."
-          echo "{label_missing}={false}" >> $GITHUB_OUTPUT
+          echo "label_missing=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Fail if PR is missing a label
