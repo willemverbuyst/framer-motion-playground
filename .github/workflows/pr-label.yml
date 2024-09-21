@@ -61,7 +61,7 @@ jobs:
           });
 
           const labels = context.payload.pull_request.labels.map(label => label.name);
-          const hasRequiredLabel = labels.some(label => /^(process.env.REQUIRED_LABELS)$/.test(label));
+          const hasRequiredLabel = labels.some(label => new RegExp(`^(${process.env.REQUIRED_LABELS})$`).test(label));
 
           // Update the PR body based on whether required labels are present
           const updatedBody = hasRequiredLabel
