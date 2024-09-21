@@ -45,9 +45,8 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
+          const { owner, repo } = context.repo;
           const prNumber = context.payload.pull_request.number;
-          const owner = context.payload.repository.owner.login;
-          const repo = context.payload.repository.name;
             
           // Get the current PR body
           const { data: pr } = await github.pulls.get({
