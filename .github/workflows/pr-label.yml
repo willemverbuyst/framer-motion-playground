@@ -2,7 +2,14 @@ name: Check PR Label
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, edited, synchronize]
+    types: 
+      - opened
+      - labeled
+      - unlabeled
+      - edited
+      - synchronize
+    branches: 
+      - development
 
 jobs:
   check-label:
