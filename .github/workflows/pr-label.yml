@@ -1,0 +1,26 @@
+name: Check PR Label
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, edited, synchronize]
+
+jobs:
+  check-label:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check if PR has a label
+      id: check_label
+      run: |
+        if [[ "$(jq '.pull_request.labels | length' $GITHUB_EVENT_PATH)" == "0" ]]; then
+          echo "PR is missing a label."
+          echo "::set-output name=label_missing::true"
+        else
+          echo "PR has labels."
+          echo "::set-output name=label_missing::false"
+        fi
+
+    - name: Fail if PR is missing a label
+      if: steps.check_label.outputs.label_missing == 'true'
+      run: |
+        echo "This PR is missing a label."
+        exit 1
