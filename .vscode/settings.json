@@ -8,5 +8,8 @@
 	},
 	"[json][jsonc][javascript][javascriptreact][typescript][typescriptreact]": {
 		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
 	}
 }
