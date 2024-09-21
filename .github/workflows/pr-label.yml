@@ -8,19 +8,23 @@ jobs:
   check-label:
     runs-on: ubuntu-latest
     steps:
-    - name: Check if PR has a label
+    - name: Check if PR has the required labels
       id: check_label
       run: |
-        if [[ "$(jq '.pull_request.labels | length' "$GITHUB_EVENT_PATH")" == "0" ]]; then
-          echo "PR is missing a label."
-          echo "label_missing=true" >> "$GITHUB_OUTPUT"
+        # Get the list of labels
+        labels=$(jq -r '.pull_request.labels[].name' "$GITHUB_EVENT_PATH")
+
+        # Check if any of the labels are bug, enhancement, or refactor
+        if echo "$labels" | grep -Eq '^(bug|enhancement|refactor)$'; then
+          echo "PR has one of the required labels."
+          echo "label_valid=true" >> "$GITHUB_OUTPUT"
         else
-          echo "PR has labels."
-          echo "label_missing=false" >> "$GITHUB_OUTPUT"
+          echo "PR is missing the required labels."
+          echo "label_valid=false" >> "$GITHUB_OUTPUT"
         fi
 
-    - name: Fail if PR is missing a label
-      if: steps.check_label.outputs.label_missing == 'true'
+    - name: Fail if PR does not have the required labels
+      if: steps.check_label.outputs.label_valid == 'false'
       run: |
-        echo "This PR is missing a label."
+        echo "This PR is missing one of the required labels: bug, enhancement, or refactor."
         exit 1
