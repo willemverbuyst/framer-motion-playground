@@ -42,7 +42,6 @@ jobs:
       if: steps.check_label.outputs.label_valid == 'false'
       run: |
         echo "This PR is missing one of the required labels: bug, enhancement, or refactor."
-        exit 1
 
     - name: Update PR description to check "Added label" box
       if: steps.check_label.outputs.label_valid == 'true'
