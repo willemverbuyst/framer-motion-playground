@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: Set required labels
       run: |
-        echo "REQUIRED_LABELS=bug|enhancement|refactor" >> $GITHUB_ENV
+        echo "REQUIRED_LABELS=bug|enhancement|refactor" >> "$GITHUB_ENV"
 
     - name: Check if PR has the required labels
       id: check_label
