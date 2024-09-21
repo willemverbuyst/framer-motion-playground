@@ -15,6 +15,10 @@ jobs:
   check-label:
     runs-on: ubuntu-latest
     steps:
+    - name: Set required labels
+      run: |
+        echo "REQUIRED_LABELS=bug|enhancement|refactor" >> $GITHUB_ENV
+
     - name: Check if PR has the required labels
       id: check_label
       run: |
@@ -22,7 +26,7 @@ jobs:
         labels=$(jq -r '.pull_request.labels[].name' "$GITHUB_EVENT_PATH")
 
         # Check if any of the labels are bug, enhancement, or refactor
-        if echo "$labels" | grep -Eq '^(bug|enhancement|refactor)$'; then
+        if echo "$labels" | grep -Eq "($REQUIRED_LABELS)"; then
           echo "PR has one of the required labels."
           echo "label_valid=true" >> "$GITHUB_OUTPUT"
         else
