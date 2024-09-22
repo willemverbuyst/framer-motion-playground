@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: Check if the comment is `/rebase`
         id: check_comment
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
         run: |
-          COMMENT=$(echo "${{ github.event.comment.body }}" | tr -d '[:space:]')
+          COMMENT=$(echo "$COMMENT_BODY" | tr -d '[:space:]')
           if [[ "$COMMENT" != "/rebase" ]]; then
             echo "Not a /rebase comment. Exiting."
             exit 0
