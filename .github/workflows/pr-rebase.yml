@@ -84,7 +84,13 @@ jobs:
         if: success()
         run: |
           git fetch origin ${{ steps.get_pr.outputs.base_ref }}
-          git rebase origin/${{ steps.get_pr.outputs.base_ref }}
+          if git rebase origin/${{ steps.get_pr.outputs.base_ref }}; then
+            echo "Rebase successful!"
+          else
+            echo "Rebase failed due to conflicts. Aborting."
+            git rebase --abort
+            exit 1 
+          fi
 
       - name: Push rebased branch
         if: success()
