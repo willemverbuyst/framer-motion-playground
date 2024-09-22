@@ -5,3 +5,5 @@
 ## What is this?
 
 A simple Next.js app to try out some GitHub Actions.
+
+[live](https://willemverbuyst.github.io/random-numbers/)
