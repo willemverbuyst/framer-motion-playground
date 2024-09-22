@@ -52,7 +52,6 @@ jobs:
       - name: Verify PR author
         id: verify_author
         run: |
-          echo "${{ steps.get_pr.outcome }}"
           COMMENTER="${{ github.event.comment.user.login }}"
           AUTHOR="${{ steps.get_pr.outputs.pr_author }}"
 
