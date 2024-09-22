@@ -51,6 +51,10 @@ jobs:
               head_ref: pullRequest.head.ref
             };
 
+            core.setOutput("pr_author", pullRequest.user.login);
+            core.setOutput("base_ref", pullRequest.base.ref);
+            core.setOutput("head_ref", pullRequest.head.ref);
+
       - name: Verify PR author
         id: verify_author
         run: |
