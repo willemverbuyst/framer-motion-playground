@@ -1,0 +1,106 @@
+name: Rebase PR on Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  rebase:
+    if: github.event.issue.pull_request != null
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if the comment is `/rebase`
+        id: check_comment
+        run: |
+          COMMENT=$(echo "${{ github.event.comment.body }}" | tr -d '[:space:]')
+          if [[ "$COMMENT" != "/rebase" ]]; then
+            echo "Not a /rebase comment. Exiting."
+            exit 0
+          fi
+
+      - name: Get PR details
+        id: get_pr
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.issue.number;
+            const { data: pullRequest } = await github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+            return {
+              pr_author: pullRequest.user.login,
+              base_ref: pullRequest.base.ref,
+              head_ref: pullRequest.head.ref
+            };
+
+      - name: Verify PR author
+        id: verify_author
+        run: |
+          COMMENTER="${{ github.event.comment.user.login }}"
+          AUTHOR="${{ steps.get_pr.outputs.pr_author }}"
+
+          if [[ "$COMMENTER" != "$AUTHOR" ]]; then
+            echo "You are not the author of this PR. Exiting."
+            exit 1
+          fi
+        shell: bash
+
+      - name: Reply to non-author comment
+        if: failure() && steps.verify_author.outcome == 'failure'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const commenter = context.payload.comment.user.login;
+            await github.issues.createComment({
+              issue_number: issueNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `@${commenter} You are not allowed to rebase as you are not the author of this PR.`
+            });
+
+      - name: Checkout PR branch
+        if: success()
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.get_pr.outputs.head_ref }}
+
+      - name: Rebase the PR branch onto the base branch
+        if: success()
+        run: |
+          git fetch origin ${{ steps.get_pr.outputs.base_ref }}
+          git rebase origin/${{ steps.get_pr.outputs.base_ref }}
+
+      - name: Push rebased branch
+        if: success()
+        run: |
+          git push --force-with-lease
+
+      - name: Post Success Comment
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.issue.number;
+            await github.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Rebase was successful!",
+            });
+
+      - name: Post Failure Comment
+        if: failure() && steps.verify_author.outcome != 'failure'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.issue.number;
+            await github.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Rebase failed. Please check the logs for more details.",
+            });

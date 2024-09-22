@@ -72,6 +72,6 @@ jobs:
     - name: Fail if PR does not have the required labels
       if: steps.check_label.outputs.label_valid == 'false'
       run: |
-        echo "This PR is missing one of the required labels: bug, enhancement, or refactor."
+        echo "This PR is missing one of the required labels: bug, enhancement or refactor."
         exit 1
         
