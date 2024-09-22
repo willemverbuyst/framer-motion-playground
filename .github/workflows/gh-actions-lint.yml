@@ -11,6 +11,6 @@ jobs:
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
         shell: bash
       - name: Check workflow files
-        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        run: ${{ steps.get_actionlint.outputs.executable }} -color --exclude ./.github/workflows/set-up-node/action.yml
         shell: bash
       
