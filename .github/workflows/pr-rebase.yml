@@ -39,18 +39,21 @@ jobs:
         with:
           script: |
             const prNumber = context.payload.issue.number;
-            console.log(prNumber)
             const { data: pullRequest } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber,
             });
-            console.log(pullRequest.user.login)
+            
             return {
               pr_author: pullRequest.user.login,
               base_ref: pullRequest.base.ref,
               head_ref: pullRequest.head.ref
             };
+
+            core.setOutput("pr_author", pullRequest.user.login);
+            core.setOutput("base_ref", pullRequest.base.ref);
+            core.setOutput("head_ref", pullRequest.head.ref);
 
       - name: Verify PR author
         id: verify_author
