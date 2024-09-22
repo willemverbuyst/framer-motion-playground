@@ -23,7 +23,7 @@ jobs:
       run: |
         echo "REQUIRED_LABELS=bug|enhancement|refactor" >> "$GITHUB_ENV"
 
-    - name: Check if PR has the required labels
+    - name: Check if PR has one of the required labels
       id: check_label
       run: |
         # Get the list of labels
