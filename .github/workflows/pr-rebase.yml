@@ -39,13 +39,12 @@ jobs:
         with:
           script: |
             const prNumber = context.payload.issue.number;
-            console.log(prNumber)
             const { data: pullRequest } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber,
             });
-            console.log(pullRequest.user.login)
+            
             return {
               pr_author: pullRequest.user.login,
               base_ref: pullRequest.base.ref,
