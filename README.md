@@ -7,3 +7,9 @@
 A simple Next.js app to try out some GitHub Actions.
 
 [live](https://willemverbuyst.github.io/random-numbers/)
+
+## Try out locally?
+
+> npm i
+
+> npm run dev
