@@ -23,7 +23,7 @@ jobs:
 
       - name: Get PR details
         id: get_pr
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const prNumber = context.payload.issue.number;
@@ -55,10 +55,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const issueNumber = context.payload.issue.number;
             const commenter = context.payload.comment.user.login;
             await github.rest.issues.createComment({
-              issue_number: issueNumber,
+              issue_number: context.payload.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `@${commenter} You are not allowed to rebase as you are not the author of this PR.`
