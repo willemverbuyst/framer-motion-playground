@@ -10,6 +10,7 @@
 		"format": "biome format .",
 		"format:write": "biome format --write .",
 		"test": "vitest",
+		"test:e2e": "playwright test",
 		"prepare": "husky install",
 		"type-check": "tsc --noEmit",
 		"knip": "knip"
@@ -32,6 +33,7 @@
 		"@biomejs/biome": "1.8.3",
 		"@commitlint/cli": "^19.4.0",
 		"@commitlint/config-conventional": "^19.2.2",
+		"@playwright/test": "^1.47.2",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/react": "^16.0.0",
 		"@types/lodash": "^4.17.7",
