@@ -1,9 +1,11 @@
 import {
-	chain as _chain,
-	padStart as _padStart,
-	random as _random,
-	range as _range,
 	toString as _toString,
+	chunk,
+	map,
+	padStart,
+	random,
+	range,
+	sortBy,
 } from "lodash";
 
 export function generateRandomNumbers(
@@ -11,12 +13,13 @@ export function generateRandomNumbers(
 	upper: number,
 	numberOfRandomNumbers: number,
 ) {
-	const arr = _range(numberOfRandomNumbers);
+	const arr = range(numberOfRandomNumbers);
+	const randomNumbers = map(arr, () => random(lower, upper));
+	const randomNumbersSorted = sortBy(randomNumbers);
+	const randomNumbersPadded = map(randomNumbersSorted, (n) =>
+		padStart(_toString(n), 6, "0"),
+	);
+	const randomNumbersChunked = chunk(randomNumbersPadded, 10);
 
-	return _chain(arr)
-		.map(() => _random(lower, upper))
-		.sortBy()
-		.map((n) => _padStart(_toString(n), 6, "0"))
-		.chunk(10)
-		.value();
+	return randomNumbersChunked;
 }
