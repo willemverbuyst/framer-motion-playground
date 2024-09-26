@@ -11,7 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: "Random numbers",
+	title: "Random Numbers",
 	description: "Generate random numbers with the click of a button",
 };
 
